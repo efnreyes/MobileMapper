@@ -7,9 +7,11 @@
 //
 
 #import "ViewController.h"
+#import <MapKit/MapKit.h>
 
 @interface ViewController ()
-
+@property (strong, nonatomic) IBOutlet MKMapView *myMapView;
+@property MKPointAnnotation *mobileMakersAnnotation;
 @end
 
 @implementation ViewController
@@ -17,7 +19,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	CLLocationCoordinate2D coordinate;
+    coordinate.latitude = 41.89373984;
+    coordinate.longitude = -87.63532979;
+
+    self.mobileMakersAnnotation = [[MKPointAnnotation alloc]init];
+    self.mobileMakersAnnotation.coordinate = coordinate;
+    self.mobileMakersAnnotation.title = @"MOBILE MAKERS!";
+    [self.myMapView addAnnotation:self.mobileMakersAnnotation];
 }
 
 - (void)didReceiveMemoryWarning
