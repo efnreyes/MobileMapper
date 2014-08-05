@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import <MapKit/MapKit.h>
 
-@interface ViewController ()
+@interface ViewController ()<MKMapViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *myMapView;
 @property MKPointAnnotation *mobileMakersAnnotation;
 @end
@@ -29,10 +29,13 @@
     [self.myMapView addAnnotation:self.mobileMakersAnnotation];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+//This delegate method should be implemented if you want to have a custom image instead of classic pin
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    MKPinAnnotationView *pin = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil];
+    pin.canShowCallout = YES;
+    pin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    pin.image = [UIImage imageNamed:@"mobilemakers"];
+    return pin;
 }
 
 @end
