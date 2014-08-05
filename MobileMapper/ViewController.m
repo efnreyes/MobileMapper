@@ -42,11 +42,19 @@
 
 //This delegate method should be implemented if you want to have a custom image instead of classic pin
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-    MKPinAnnotationView *pin = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil];
-    pin.canShowCallout = YES;
-    pin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    pin.image = [UIImage imageNamed:@"mobilemakers"];
-    return pin;
+    if (annotation != self.myMapView.userLocation) {
+        MKPinAnnotationView *pin = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil];
+        pin.canShowCallout = YES;
+        pin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        if (annotation == self.mobileMakersAnnotation) {
+            pin.image = [UIImage imageNamed:@"mobilemakers"];
+        } else {
+            pin.image = [UIImage imageNamed:@"mountrushmore"];
+        }
+        return pin;
+    } else {
+        return nil;
+    }
 }
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
